@@ -96,4 +96,15 @@
   position: relative;
   background-color: #fff;
 }
+
+.flybasket__button{
+  border-radius: 18px;
+  border: none;
+  background: #9DD458;
+  color: #FFF;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 18px 0;
+}
 </style>
