@@ -21,9 +21,27 @@ window.addEventListener('load', () => {
 })
 </script>
 
+<script>
+export default {
+  data() {
+    return {
+      showCart: true
+    }
+  },
+
+  methods: {
+    // Открытие и закрытие корзины
+    toggleCart() {
+      // this.showCart = !this.showCart
+      document.body.classList.toggle('is-hidden' /* , this.showCart */)
+    }
+  }
+}
+</script>
+
 <template>
   <div class="wrapper">
-    <FlyBasket />
+    <FlyBasket v-if="showCart" />
     <header class="header">
       <div class="container">
         <div class="header__row">
@@ -40,7 +58,7 @@ window.addEventListener('load', () => {
             <nav class="menu__nav">
               <ul class="menu__list">
                 <li class="menu__item">
-                  <a href="" class="menu__link">
+                  <a @click="toggleCart" class="menu__link">
                     <svg class="menu__icon menu__icon--cart">
                       <use href="./assets/sprite.svg#icon-cart"></use>
                     </svg>
@@ -48,13 +66,13 @@ window.addEventListener('load', () => {
                   </a>
                 </li>
                 <li class="menu__item">
-                  <a href="" class="menu__link">
+                  <a class="menu__link">
                     <svg class="menu__icon"><use href="./assets/sprite.svg#icon-fav"></use></svg>
                     Закладки
                   </a>
                 </li>
                 <li class="menu__item">
-                  <a href="" class="menu__link">
+                  <a class="menu__link">
                     <svg class="menu__icon"><use href="./assets/sprite.svg#icon-lk"></use></svg>
                     Профиль
                   </a>
@@ -139,6 +157,10 @@ body {
   background: #e7f6ff;
   padding-top: 85px;
 }
+body.is-hidden {
+  position: relative;
+  overflow: hidden;
+}
 .wrapper {
   max-width: 1080px;
   margin: 0 auto;
@@ -213,6 +235,7 @@ body {
   font-size: 14px;
   line-height: normal;
   text-decoration: none;
+  cursor: pointer;
 }
 .menu__item + .menu__item {
   margin-left: 32px;

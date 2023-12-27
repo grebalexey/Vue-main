@@ -1,11 +1,38 @@
-<script></script>
+<script>
+import productMixin from './productMixin'
+export default {
+  mixins: [productMixin],
+  methods: {
+    closeBasket() {
+      document.body.classList.remove('is-hidden')
+    }
+  }
+}
+</script>
 
 <template>
   <div class="flybasket">
-    <div class="flybasket__shadow"></div>
+    <div @click="closeBasket()" class="flybasket__shadow"></div>
     <div class="flybasket__wrapper">
       <div class="flybasket__header">Корзина</div>
-      <div class="flybasket__body"></div>
+      <div class="flybasket__body">
+        <div v-for="cartItem in cart" :key="cartItem.id" class="flybasket-item">
+          <div class="flybasket-item__row">
+            <div class="flybasket-item__image">
+              <img :src="cartItem.image" alt="" />
+            </div>
+            <div class="flybasket-item__content">
+              <div class="flybasket-item__title">{{ cartItem.name }}</div>
+              <div class="flybasket-item__value">{{ cartItem.title }}</div>
+            </div>
+            <button>
+              <svg>
+                <use href="../assets/sprite.svg#icon-remove"></use>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
       <div class="flybasket__footer">
         <ul class="flybasket__list">
           <li class="flybasket__option">
@@ -45,10 +72,15 @@
   width: 100%;
   opacity: 0.5;
   background: #000;
+  cursor: pointer;
 }
 .flybasket__wrapper {
   position: relative;
   z-index: 50;
+
+  display: flex;
+  flex-direction: column;
+
   width: 385px;
   background: #fff;
 
@@ -56,6 +88,7 @@
   height: 100%;
   margin-left: auto;
   padding: 32px 0 32px 32px;
+  box-sizing: border-box;
 }
 .flybasket__header,
 .flybasket__footer,
@@ -83,6 +116,11 @@
   justify-content: space-between;
   position: relative;
 }
+
+.flybasket__option + .flybasket__option {
+  margin-top: 20px;
+}
+
 .flybasket__option:before {
   content: '';
   position: absolute;
@@ -97,14 +135,34 @@
   background-color: #fff;
 }
 
-.flybasket__button{
+.flybasket__button {
+  position: relative;
   border-radius: 18px;
-  border: none;
-  background: #9DD458;
-  color: #FFF;
-  text-align: center;
+  border: 0;
+  outline: 0;
+  cursor: pointer;
+  background: #9dd458;
+  color: #fff;
   font-size: 16px;
   font-weight: 600;
-  padding: 18px 0;
+  padding: 22px 32px;
+  margin-top: 24px;
+}
+
+.flybasket__button--full-width svg {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 32px;
+  stroke: #fff;
+  height: 12px;
+  width: 13px;
+}
+.flybasket__button--full-width {
+  width: 100%;
+}
+
+body:not(.is-hidden) .flybasket {
+  display: none;
 }
 </style>
